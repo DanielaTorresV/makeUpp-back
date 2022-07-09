@@ -27,6 +27,14 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    purchaseDetails: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "PurchaseDetail",
+        },
+      ],
+    },
   },
   {
     timestamps: true,
