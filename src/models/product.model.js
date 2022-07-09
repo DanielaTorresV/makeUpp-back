@@ -10,16 +10,12 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    price: {
+    image: {
       type: String,
       required: true,
     },
-    amount: {
+    stock: {
       type: Number,
-      required: true,
-    },
-    selected: {
-      type: Boolean,
       required: true,
     },
   },

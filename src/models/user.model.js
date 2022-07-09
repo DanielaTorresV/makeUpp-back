@@ -23,8 +23,9 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
-    products: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Products" }],
+    isManager: {
+      type: Boolean,
+      default: false,
     },
   },
   {

@@ -1,15 +1,9 @@
 const Product = require("../models/product.model");
-const User = require("../models/user.model");
-const Manager = require("../models/manager.model");
 
 module.exports = {
   async list(req, res) {
     try {
-      const userId = req.user;
-      const products = await Product.find({ user: userId }).populate(
-        "user",
-        "email"
-      );
+      const products = await Product.find();
       res.status(200).json({ message: "Products found", data: products });
     } catch (err) {
       res.status(404).json({ message: "Products not found" });
@@ -19,10 +13,7 @@ module.exports = {
   async show(req, res) {
     try {
       const { productId } = req.params;
-      const product = await Product.findById(productId).populate(
-        "user",
-        "email"
-      );
+      const product = await Product.findById(productId);
       res.status(200).json({ message: "Product found", data: product });
     } catch (err) {
       res.status(404).json({ message: "Product not found" });
@@ -31,11 +22,7 @@ module.exports = {
 
   async create(req, res) {
     try {
-      const managerId = req.manager;
-      const product = await Product.create({ ...req.body, manager: managerId });
-      const manager = await Manager.findById(managerId);
-      manager.products.push(product);
-      manager.save({ validateBeforeSave: false });
+      const product = await Product.create({ ...req.body });
       res.status(201).json({ message: "Product created", data: product });
     } catch (err) {
       res

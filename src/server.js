@@ -4,9 +4,8 @@ const { connect } = require("./db");
 const morgan = require("morgan");
 require("dotenv").config();
 const userRouter = require("./routes/user");
-const managerRouter = require("./routes/manager");
 const productRouter = require("./routes/product");
-//const { transporter, verify } = require("./src/utils/mailer");
+//const { transporter, verify } = require("./utils/mailer");
 
 const port = process.env.PORT || 8000;
 
@@ -19,7 +18,6 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/users", userRouter);
-app.use("/manager", managerRouter);
 app.use("/products", productRouter);
 
 app.listen(port, () => {
