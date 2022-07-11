@@ -1,9 +1,7 @@
 const nodemailer = require("nodemailer");
 
 exports.transporter = nodemailer.createTransport({
-  host: "smtp.aol.com",
-  port: 465,
-  secure: true,
+  service: "gmail",
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASSWORD,
@@ -23,14 +21,14 @@ exports.welcome = ({ name, email }) => {
     to: email,
     subject: "Bienvenido a MakeUpp",
     html: `<div style="
-    background-color: #59a7a7;
-    color: white;
+    background-color: #BE5260;
+    color: #F3DFD1;
     font-family: Arial, Helvetica, sans-serif;
     padding: 6px 24px;
     border-radius: 4px;">
     <img
-    src="https://res.cloudinary.com/clontrello/image/upload/v1656625031/test-preset/trello-logo_vj8xgw.png"
-    alt="Logo de trello"
+    src="https://res.cloudinary.com/dannytorres/image/upload/v1657574124/Logo_ahoxqv.png"
+    alt="Logo de MakeUpp"
     width="250"
     style="margin-top: 16px"
   />

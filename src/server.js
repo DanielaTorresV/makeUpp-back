@@ -7,14 +7,14 @@ const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
 const boxRouter = require("./routes/box");
 const purchaseDetailRouter = require("./routes/purchaseDetail");
-//const { transporter, verify } = require("./utils/mailer");
+const { transporter, verify } = require("./utils/mailer");
 
 const port = process.env.PORT || 8000;
 
 const app = express();
 app.use(cors());
 connect();
-//verify(transporter);
+verify(transporter);
 
 app.use(express.json());
 app.use(morgan("dev"));

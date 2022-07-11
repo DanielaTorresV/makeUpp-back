@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const passwordRegex = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-//const { transporter, welcome } = require("../utils/mailer");
+const { transporter, welcome } = require("../utils/mailer");
 
 module.exports = {
   async register(req, res) {
@@ -23,6 +23,7 @@ module.exports = {
         const token = jwt.sign({ id: user._id }, process.env.SECRET, {
           expiresIn: 60 * 60 * 24 * 365,
         });
+        await transporter.sendMail(welcome(user));
         return res.status(200).json({
           message: "User was created",
           data: {
@@ -41,6 +42,7 @@ module.exports = {
         const token = jwt.sign({ id: user._id }, process.env.SECRET, {
           expiresIn: 60 * 60 * 24 * 365,
         });
+        await transporter.sendMail(welcome(user));
         return res.status(200).json({
           message: "User was created",
           data: {
@@ -50,7 +52,6 @@ module.exports = {
           },
         });
       }
-      //await transporter.sendMail(welcome(user));
     } catch (err) {
       res
         .status(400)
