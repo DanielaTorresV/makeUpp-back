@@ -52,7 +52,7 @@ module.exports = {
     }
   },
 
-  async destroy(req, res) {
+  /*async destroy(req, res) {
     try {
       const { boxId } = req.params;
       const box = await Box.findByIdAndDelete(boxId);
@@ -61,6 +61,23 @@ module.exports = {
       res
         .status(400)
         .json({ message: "Box could not be destroyed", data: err });
+    }
+  },*/
+
+  async destroy(req, res) {
+    try {
+      const { boxId } = req.params;
+      const { productId } = req.body;
+      const box = await Box.findById(boxId);
+      const i = box.products.indexOf(productId);
+      box.products.splice(i, 1);
+      box.save({ validateBeforeSave: false });
+      console.log(box.products);
+      res.status(200).json({ message: "Product destroyed", data: box });
+    } catch (err) {
+      res
+        .status(400)
+        .json({ message: "Product could not be destroyed", data: err });
     }
   },
 };

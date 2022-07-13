@@ -16,12 +16,7 @@ const boxSchema = new Schema(
       type: String,
     },
     products: {
-      type: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: "Product",
-        },
-      ],
+      type: Array,
     },
   },
   {
