@@ -39,7 +39,11 @@ module.exports = {
   async update(req, res) {
     try {
       const { boxId } = req.params;
-      const box = await Box.findByIdAndUpdate(boxId, req.body, {
+      const { idLastProduct } = req.body;
+      const box = await Box.findById(boxId);
+      box.products.push(idLastProduct);
+      box.save({ validateBeforeSave: false });
+      await Box.findByIdAndUpdate(boxId, req.body, {
         new: true,
       });
       res.status(200).json({ message: "Box updated", data: box });

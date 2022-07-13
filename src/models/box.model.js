@@ -12,6 +12,9 @@ const boxSchema = new Schema(
       required: true,
       default: 50000,
     },
+    idLastProduct: {
+      type: String,
+    },
     products: {
       type: [
         {
