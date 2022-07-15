@@ -2,7 +2,12 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const passwordRegex = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-const { transporter, welcome } = require("../utils/mailer");
+const {
+  transporter,
+  welcome,
+  mailChangePassword,
+  mailRecoveredPassword,
+} = require("../utils/mailer");
 
 module.exports = {
   async register(req, res) {
@@ -92,6 +97,50 @@ module.exports = {
       res.status(200).json({ message: "Users found", data: users });
     } catch (err) {
       res.status(404).json({ message: "Users not found" });
+    }
+  },
+
+  async getemail(req, res) {
+    try {
+      const { email } = req.body;
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+      }
+
+      const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+        expiresIn: 60 * 5,
+      });
+
+      await transporter.sendMail(mailRecoveredPassword(user, token));
+
+      res.status(200).json({ message: "Email send", user });
+    } catch (err) {
+      res.status(400).json({ message: "Email could not be send", data: err });
+    }
+  },
+
+  async recoveredpassword(req, res) {
+    try {
+      const { email, newPassword } = req.body;
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+      }
+
+      const newEncPassword = await bcrypt.hash(newPassword, 8);
+      user.password = newEncPassword;
+      await user.save({ validateBeforeSave: false });
+
+      res.status(201).json({ message: "Password changed successfully", user });
+
+      await transporter.sendMail(mailChangePassword(user));
+    } catch (err) {
+      res
+        .status(400)
+        .json({ message: "Password could not be changed", data: err });
     }
   },
 

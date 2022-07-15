@@ -14,10 +14,6 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    stock: {
-      type: Number,
-      required: true,
-    },
   },
   {
     timestamps: true,
