@@ -10,6 +10,14 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+      enum: {
+        values: ["Eyes", "Face", "Lips"],
+        message: "It is a invalid name for the list",
+      },
+    },
     image: {
       type: String,
       required: true,

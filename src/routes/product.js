@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const productController = require("../controllers/product.controller");
 const { authManager } = require("../utils/authManager");
-const { formData } = require("../utils/formData");
+const formData = require("../utils/formData");
 
 router.route("/").get(productController.list);
 router.route("/:productId").get(productController.show);
