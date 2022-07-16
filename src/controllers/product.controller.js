@@ -31,20 +31,6 @@ module.exports = {
     }
   },
 
-  async update(req, res) {
-    try {
-      const { productId } = req.params;
-      const product = await Product.findByIdAndUpdate(productId, req.body, {
-        new: true,
-      });
-      res.status(200).json({ message: "Product updated", data: product });
-    } catch (err) {
-      res
-        .status(400)
-        .json({ message: "Product could not be updated", data: err });
-    }
-  },
-
   async destroy(req, res) {
     try {
       const { productId } = req.params;
