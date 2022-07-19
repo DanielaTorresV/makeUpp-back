@@ -113,7 +113,7 @@ module.exports = {
       const user = await User.findByIdAndUpdate(userId, req.body, {
         new: true,
       });
-      res.status(200).json({ message: "User update" });
+      res.status(200).json({ message: "User update", data: user });
     } catch (err) {
       res.status(400).json({ message: "User could not be updated", data: err });
     }
