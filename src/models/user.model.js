@@ -23,6 +23,12 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    phone: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
     isManager: {
       type: Boolean,
       default: false,
