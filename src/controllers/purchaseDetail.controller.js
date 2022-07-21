@@ -53,7 +53,9 @@ module.exports = {
         {
           new: true,
         }
-      );
+      )
+        .populate("user")
+        .populate("box");
       res.status(200).json({ message: "Purchase updated", data: purchase });
     } catch (err) {
       res

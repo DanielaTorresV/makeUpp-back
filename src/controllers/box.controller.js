@@ -46,12 +46,10 @@ module.exports = {
       if (!product) {
         throw new Error("Product not found");
       }
-      const box = await Box.findById(boxId);
+      const box = await Box.findById(boxId).populate("products");
       box.products.push(product);
       box.save({ validateBeforeSave: false });
-      await Box.findByIdAndUpdate(boxId, req.body, {
-        new: true,
-      });
+
       res.status(200).json({ message: "Box updated", data: box });
     } catch (err) {
       res.status(400).json({ message: "Box could not be updated", data: err });
