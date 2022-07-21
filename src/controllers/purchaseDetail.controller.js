@@ -33,7 +33,8 @@ module.exports = {
         user: userId,
         box: boxId,
       });
-      const user = await User.findById(userId);
+      const user = await User.findById(userId).populate("user")
+      .populate("box");
       user.purchaseDetails.push(purchase);
       user.save({ validateBeforeSave: false });
       res.status(201).json({ message: "Purchase created", data: purchase });
