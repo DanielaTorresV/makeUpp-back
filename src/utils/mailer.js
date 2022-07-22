@@ -100,3 +100,54 @@ exports.mailRecoveredPassword = ({ name, email }, token) => {
     text: `Recuperando contraseña de: <strong>${name}</strong>, Recuerda visitarnos para seguir completando todas tus tareas`,
   };
 };
+
+exports.confirmationPurchase = (
+  name,
+  email,
+  phone,
+  address,
+  price,
+  productOne,
+  producttwo,
+  productthree,
+  productFour,
+  productFive
+) => {
+  return {
+    from: `"${process.env.MAIL_USERNAME}"<${process.env.MAIL_USER}>`,
+    to: email,
+    subject: "Purchase confirmation in MakeUpp",
+    html: `<div style="
+    background-color: #BE5260;
+    color: #F3DFD1;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 6px 24px;
+    border-radius: 4px;">
+    <img
+    src="https://res.cloudinary.com/dannytorres/image/upload/v1657574124/Logo_ahoxqv.png"
+    alt="Logo de MakeUpp"
+    width="150"
+    style="margin-top: 16px"
+  />
+  <h2>
+    ¡Hello! <strong>${name}</strong>.
+  </h2>
+  <p style="font-size: 18px">
+  This is the information of your purchase:
+  </p>
+  <p><strog>Contact Phone:</strog> ${phone}</p>
+  <p><strong>Shipping Address:</strong> ${address}</p>
+  <p style="font-size: 16px"><strong>Products:</strong></p>
+  <ol>
+  <li>Product 1: ${productOne}</li>
+  <li>Product 2: ${producttwo}</li>
+  <li>Product 3: ${productthree}</li>
+  <li>Product 4: ${productFour}</li>
+  <li>Product 5: ${productFive}</li>
+  </ol>
+  <p><strong>Purchase Value:</strong> $ ${price}</p>
+  <p style="font-style: italic">Enjoy your purchase! Remember that payment is on delivery, we hope to have digital payment options very soon.</p>  
+</div>`,
+    text: `Confirm Purchase of: <strong>${name}</strong>, Remember to visit us to create your personalized makeup boxes!`,
+  };
+};

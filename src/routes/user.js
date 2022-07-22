@@ -8,6 +8,7 @@ router.route("/myuser").get(auth, userController.show);
 router.route("/").put(auth, userController.update);
 router.route("/getemail").post(userController.getemail);
 router.route("/recovered-password").put(auth, userController.recoveredpassword);
+router.route("/confirmation").post(auth, userController.confirmation);
 router.route("/").delete(auth, userController.destroy);
 
 module.exports = router;

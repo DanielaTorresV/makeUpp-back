@@ -1,6 +1,7 @@
 const PurchaseDetail = require("../models/purchaseDetail.model");
 const User = require("../models/user.model");
 const Box = require("../models/box.model");
+const { transporter, confirmationPurchase } = require("../utils/mailer");
 
 module.exports = {
   async list(req, res) {

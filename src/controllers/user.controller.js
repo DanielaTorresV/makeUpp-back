@@ -7,6 +7,7 @@ const {
   welcome,
   mailChangePassword,
   mailRecoveredPassword,
+  confirmationPurchase,
 } = require("../utils/mailer");
 
 module.exports = {
@@ -160,6 +161,42 @@ module.exports = {
       res
         .status(400)
         .json({ message: "Password could not be changed", data: err });
+    }
+  },
+
+  async confirmation(req, res) {
+    try {
+      const userId = req.user;
+      const { name, email, phone, address, price, products } = req.body;
+      const user = await User.findById(userId);
+
+      const productOne = products[0].name;
+      const producttwo = products[1].name;
+      const productthree = products[2].name;
+      const productFour = products[3].name;
+      const productFive = products[4].name;
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+      }
+      await transporter.sendMail(
+        confirmationPurchase(
+          name,
+          email,
+          phone,
+          address,
+          price,
+          productOne,
+          producttwo,
+          productthree,
+          productFour,
+          productFive
+        )
+      );
+
+      res.status(200).json({ message: "Email send", user });
+    } catch (err) {
+      res.status(400).json({ message: "Email could not be send", data: err });
     }
   },
 
