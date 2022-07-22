@@ -1,10 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-const { connect } = require("./src/db");
-const { auth } = require("./src/utils/auth");
+const { connect } = require("./db");
 const morgan = require("morgan");
-require("dotenv").config({ path: "./.env" });
-const { transporter, verify } = require("./src/utils/mailer");
+require("dotenv").config();
+const userRouter = require("./routes/user");
+const productRouter = require("./routes/product");
+const boxRouter = require("./routes/box");
+const purchaseDetailRouter = require("./routes/purchaseDetail");
+const { transporter, verify } = require("./utils/mailer");
 
 const port = process.env.PORT || 8000;
 
@@ -14,9 +17,13 @@ connect();
 verify(transporter);
 
 app.use(express.json());
-
 app.use(morgan("dev"));
 
-server.listen(port, () => {
+app.use("/users", userRouter);
+app.use("/products", productRouter);
+app.use("/boxes", boxRouter);
+app.use("/purchases", purchaseDetailRouter);
+
+app.listen(port, () => {
   console.log("Estamos al aire");
 });
