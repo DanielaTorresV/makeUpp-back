@@ -11,12 +11,10 @@ const purchaseDetailSchema = new Schema(
       required: true,
     },
     user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: [{ type: Schema.Types.ObjectId, ref: "User" }],
     },
     box: {
-      type: Schema.Types.ObjectId,
-      ref: "Box",
+      type: [{ type: Schema.Types.ObjectId, ref: "Box" }],
     },
   },
   {
